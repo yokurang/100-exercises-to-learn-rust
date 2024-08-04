@@ -13,11 +13,50 @@ impl Ticket {
     //   - the `description` should be at most 500 bytes long.
     //  The method should panic if any of the requirements are not met.
     //
+    fn status_must_be_valid(status: &str) -> bool {
+        matches!(status, "To-Do" | "In Progress" | "Done")
+    }
+
+    fn title_cannot_be_empty(title: &str) -> bool {
+        !title.is_empty()
+    }
+
+    fn title_cannot_be_longer_than_fifty_chars(title: &str) -> bool {
+        title.len() <= 50
+    }
+
+    fn description_cannot_be_empty(description: &str) -> bool {
+        !description.is_empty()
+    }
+
+    fn description_cannot_be_longer_than_500_chars(description: &str) -> bool {
+        description.len() <= 500
+    }
+
     // You'll have to use what you learned in the previous exercises,
     // as well as some `String` methods. Use the documentation of Rust's standard library
     // to find the most appropriate options -> https://doc.rust-lang.org/std/string/struct.String.html
     fn new(title: String, description: String, status: String) -> Self {
-        todo!();
+        if !Self::status_must_be_valid(&status) {
+            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
+        }
+
+        if !Self::title_cannot_be_empty(&title) {
+            panic!("Title cannot be empty");
+        }
+
+        if !Self::title_cannot_be_longer_than_fifty_chars(&title) {
+            panic!("Title cannot be longer than 50 bytes");
+        }
+
+        if !Self::description_cannot_be_empty(&description) {
+            panic!("Description cannot be empty");
+        }
+
+        if !Self::description_cannot_be_longer_than_500_chars(&description) {
+            panic!("Description cannot be longer than 500 bytes");
+        }
+
         Self {
             title,
             description,

@@ -17,4 +17,3 @@ mod tests {
         assert_eq!(compute(1, 2), 5);
     }
 }
-
