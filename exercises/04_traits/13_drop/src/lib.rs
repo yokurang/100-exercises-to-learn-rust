@@ -2,6 +2,32 @@
 //  unless a certain operation has been performed on it.
 //  You can see the expected API in the tests below.
 
+use std::cell::Cell;
+
+pub struct DropBomb {
+    active: Cell<bool>,
+}
+
+impl DropBomb {
+    pub fn new() -> Self {
+        DropBomb {
+            active: Cell::new(true),
+        }
+    }
+
+    pub fn defuse(&mut self) {
+        self.active.set(false);
+    }
+}
+
+impl Drop for DropBomb {
+    fn drop(&mut self) {
+        if self.active.get() {
+            panic!("DropBomb was dropped without being defused!");
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
